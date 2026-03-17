@@ -104,6 +104,63 @@ gh pr review 123 --request-changes --body "Blocking issue: ..."
 
 Prefer drafting the review content locally before posting it.
 
+## Scan A Repo Before Public Release
+
+```powershell
+scripts/git_privacy_scan.ps1 -RepoPath .
+git log --format='%h %ae' main
+```
+
+Interpretation:
+
+- Any token, key header, or local path finding blocks publication until removed.
+- Any commit email that is not a GitHub `users.noreply.github.com` address should be reviewed before public release.
+- If the repo contains private history you do not want exposed, export a clean public repo instead of changing visibility in place.
+
+## Export A Clean Public Repository
+
+From a new export directory that does not contain the original `.git` history:
+
+```powershell
+git init -b main
+git config user.name "PUBLIC_NAME"
+git config user.email "12345678+user@users.noreply.github.com"
+git add .
+git commit -m "Initial public release"
+gh repo create OWNER/REPO --public --source . --remote origin --push
+```
+
+Use this flow when the private source repo contains old emails, internal reviews, or commits that should not become public.
+
+## Change Existing Repository Visibility
+
+Only do this after a clean privacy review:
+
+```powershell
+gh repo edit OWNER/REPO --visibility public --accept-visibility-change-consequences
+```
+
+If the repo fails the privacy review, stop and either rewrite history with approval or create a fresh public repo instead.
+
+## Add Or Update A License
+
+Inspect available license identifiers:
+
+```powershell
+gh repo license list
+```
+
+Fetch canonical license text and write it to `LICENSE`:
+
+```powershell
+gh repo license view lgpl-3.0 > LICENSE
+git add LICENSE
+git commit -m "Add LGPL-3.0 license"
+git push origin main
+```
+
+If the repository has a root `README.md`, add a short license note there as well.
+
 ## Issues And Follow-up Work
 
 ```powershell

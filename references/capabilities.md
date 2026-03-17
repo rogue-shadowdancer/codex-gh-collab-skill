@@ -49,30 +49,38 @@
 - Link PRs to issues with closing keywords when appropriate.
 - Inspect labels, assignees, milestones, or project linkage when the workflow depends on them.
 
+### 7. Open-source release and privacy hygiene
+
+- Scan working-tree files for common publication risks such as local absolute paths, token-like strings, and private key headers.
+- Inspect remote URLs for embedded credentials or usernames before sharing logs or publishing.
+- Audit git history identities and flag non-public commit emails before making a repo public.
+- Decide whether to sanitize an existing private repo or export a fresh public repo with clean history.
+- Add or verify a standard license file before the repository is published as open source.
+
 ## Adjacent Modules
 
-### 7. Actions and CI state
+### 8. Actions and CI state
 
 - Inspect workflow runs and job results.
 - Check whether required checks are green before merge.
 - Re-run failed workflows only with user approval when reruns have side effects.
 - Pull logs for failing jobs when debugging is required.
 
-### 8. Releases, tags, and distribution
+### 9. Releases, tags, and distribution
 
 - Inspect or create tags.
 - Draft or publish releases.
 - Confirm changelog source and release target branch.
 - Keep release publication as an explicit action, not a default side effect.
 
-### 9. Forks, upstreams, and backports
+### 10. Forks, upstreams, and backports
 
 - Add upstream remotes for fork-based work.
 - Sync a fork with upstream.
 - Cherry-pick fixes into maintenance branches.
 - Prepare backport branches and follow-up PRs.
 
-### 10. Repo policy and administration
+### 11. Repo policy and administration
 
 - Inspect branch protection symptoms when pushes or merges fail.
 - Reason about required reviews, status checks, and permissions.
@@ -95,3 +103,4 @@ Add future features without rewriting the whole skill:
 - Projects and milestone reporting
 - Multi-repo coordination and bulk branch audits
 - Repo migration between owners or organizations
+- SPDX metadata and release artifact packaging
