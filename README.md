@@ -53,3 +53,7 @@ python "$env:CODEX_HOME\skills\.system\skill-creator\scripts\quick_validate.py" 
 - Use `git` for local repository state and `gh` for GitHub-hosted actions.
 - Inspect before mutating: remotes, current branch, base branch, and auth state.
 - Ask before force pushes, branch deletion, merges, releases, or repo admin changes.
+
+## License
+
+Licensed under the GNU Lesser General Public License v3.0. See `LICENSE`.
