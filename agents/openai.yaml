@@ -1,0 +1,4 @@
+interface:
+  display_name: "GitHub Collaboration"
+  short_description: "Manage GitHub repos, branches, PRs, and reviews with git and gh."
+  default_prompt: "Handle GitHub repository setup, remote sync, branch inspection, pull requests, and code review tasks."
