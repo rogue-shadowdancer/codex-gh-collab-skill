@@ -13,6 +13,25 @@ gh auth status
 
 Use `gh auth status` only when a GitHub-hosted operation is actually needed.
 
+## Locate GitHub CLI
+
+Check the active session first:
+
+```powershell
+Get-Command gh
+where.exe gh
+```
+
+If `gh` is installed per-user and the current agent session has not reloaded `PATH`, fall back to the user install location:
+
+```powershell
+$gh = Join-Path $env:LOCALAPPDATA 'Programs\GitHubCLI\bin\gh.exe'
+Test-Path $gh
+& $gh --version
+```
+
+If the absolute path works but `gh` still is not found by name, restart the host process or terminal session before assuming the install failed.
+
 ## Create A New GitHub Repository From A Local Folder
 
 ```powershell

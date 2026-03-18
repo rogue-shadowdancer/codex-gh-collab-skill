@@ -14,6 +14,7 @@ Use `git` for local repository state and `gh` for GitHub-hosted operations. Insp
 3. Choose the workflow: repository lifecycle, branch/history inspection, review/PR work, open-source publication, or adjacent collaboration.
 4. Inspect before writing: branch graph, ahead/behind, changed files, target base branch, and any protected-branch policy.
 5. Ask before destructive or policy-sensitive actions such as force pushes, branch deletion, merges, releases, or admin changes.
+6. If `gh` is not on `PATH`, probe `Get-Command gh` first, then fall back to `$env:LOCALAPPDATA\Programs\GitHubCLI\bin\gh.exe` for a per-user install.
 
 ## Capability Map
 
@@ -62,6 +63,7 @@ Use `git` for local repository state and `gh` for GitHub-hosted operations. Insp
 - Detached HEAD or dirty worktree: report it before starting PR, merge, or release operations.
 - Converting a private repo to public: inspect current files, remotes, and git history identities first.
 - Any private email, token, local path, or unwanted old history detected: prefer a clean public-export workflow instead of changing visibility in place.
+- `gh` installed for the user but not visible to the current session: use the absolute path under `$env:LOCALAPPDATA\Programs\GitHubCLI\bin\gh.exe` or restart the host process so it reloads `PATH`.
 
 ## Standard Procedures
 

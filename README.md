@@ -32,7 +32,6 @@ Install the skill contents into your Codex skills directory as `gh-collab`. The 
 - `references/`
 - `scripts/`
 
-Do not copy this repository root README into the installed skill folder.
 Do not copy this repository root `README.md` or `LICENSE` into the installed skill folder.
 
 ## Validate
@@ -61,6 +60,7 @@ python "$env:CODEX_HOME\skills\.system\skill-creator\scripts\quick_validate.py" 
 - Inspect before mutating: remotes, current branch, base branch, and auth state.
 - Ask before force pushes, branch deletion, merges, releases, or repo admin changes.
 - Do not make a repo public until current files and git history are reviewed for privacy.
+- If `gh` is installed per-user and another agent cannot find it on `PATH`, try `$env:LOCALAPPDATA\Programs\GitHubCLI\bin\gh.exe` or restart the session that launched the agent.
 
 ## License
 
