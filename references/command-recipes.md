@@ -1,5 +1,7 @@
 # GH Collab Command Recipes
 
+When using the bundled helper scripts, prefer `python3 scripts/*.py` on macOS/Linux and `.\scripts\*.ps1` in Windows PowerShell.
+
 ## Inspect Repository Context
 
 ```powershell
@@ -49,8 +51,9 @@ git push --force-with-lease origin HEAD
 
 ## Inspect Branch Topology
 
-```powershell
-scripts/git_branch_snapshot.ps1 -RepoPath .
+```bash
+python3 scripts/git_branch_snapshot.py --repo-path .
+# Windows PowerShell: .\scripts\git_branch_snapshot.ps1 -RepoPath .
 ```
 
 Manual equivalents:
@@ -62,8 +65,9 @@ git log --graph --oneline --decorate --all -n 30
 
 ## Prepare A Local Review Snapshot
 
-```powershell
-scripts/git_review_snapshot.ps1 -RepoPath . -BaseRef origin/main -HeadRef HEAD
+```bash
+python3 scripts/git_review_snapshot.py --repo-path . --base-ref origin/main --head-ref HEAD
+# Windows PowerShell: .\scripts\git_review_snapshot.ps1 -RepoPath . -BaseRef origin/main -HeadRef HEAD
 ```
 
 Useful follow-up commands:
@@ -88,7 +92,7 @@ Use local `git diff` when remote access is unavailable or unnecessary.
 ## Create Or Update A Pull Request
 
 ```powershell
-gh pr create --base main --head feature/my-branch --title "Title" --body-file .\pr-body.md
+gh pr create --base main --head feature/my-branch --title "Title" --body-file ./pr-body.md
 gh pr edit 123 --title "Updated title"
 ```
 
@@ -106,8 +110,9 @@ Prefer drafting the review content locally before posting it.
 
 ## Scan A Repo Before Public Release
 
-```powershell
-scripts/git_privacy_scan.ps1 -RepoPath .
+```bash
+python3 scripts/git_privacy_scan.py --repo-path .
+# Windows PowerShell: .\scripts\git_privacy_scan.ps1 -RepoPath .
 git log --format='%h %ae' main
 ```
 
@@ -186,7 +191,7 @@ Treat reruns or deploy-triggering workflows as explicit actions that require app
 ```powershell
 git tag
 gh release list
-gh release create v1.2.3 --notes-file .\release-notes.md
+gh release create v1.2.3 --notes-file ./release-notes.md
 ```
 
 Do not publish releases as a side effect of a normal push or merge workflow.

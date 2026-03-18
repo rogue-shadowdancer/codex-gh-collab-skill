@@ -7,6 +7,8 @@ description: Manage GitHub repositories and collaboration workflows with git and
 
 Use `git` for local repository state and `gh` for GitHub-hosted operations. Inspect first, confirm authentication before remote mutations, and keep destructive actions explicit.
 
+Use the bundled Python helpers on macOS/Linux and the PowerShell helpers on Windows PowerShell. The helper outputs are intentionally aligned.
+
 ## Quick Start
 
 1. Confirm repo context with `git rev-parse --show-toplevel`, `git status --short --branch`, `git branch --show-current`, and `git remote -v`.
@@ -28,12 +30,12 @@ Use `git` for local repository state and `gh` for GitHub-hosted operations. Insp
 
 - Create, switch, rename, and delete branches only after checking collaboration risk.
 - Inspect tracking, ahead/behind status, merge base, divergence, and recent commit graph.
-- Use [scripts/git_branch_snapshot.ps1](scripts/git_branch_snapshot.ps1) for a deterministic branch-tree snapshot.
+- Use the platform-native branch snapshot helper: [scripts/git_branch_snapshot.py](scripts/git_branch_snapshot.py) on macOS/Linux or [scripts/git_branch_snapshot.ps1](scripts/git_branch_snapshot.ps1) on Windows PowerShell.
 
 ### 3. Diff And Review Preparation
 
 - Compare base and head refs, collect changed files, summarize diffstat, and identify the commits under review.
-- Use [scripts/git_review_snapshot.ps1](scripts/git_review_snapshot.ps1) before local review or before posting GitHub comments.
+- Use the platform-native review snapshot helper: [scripts/git_review_snapshot.py](scripts/git_review_snapshot.py) on macOS/Linux or [scripts/git_review_snapshot.ps1](scripts/git_review_snapshot.ps1) on Windows PowerShell.
 
 ### 4. Pull Requests And Review Loops
 
@@ -85,13 +87,13 @@ Use `git` for local repository state and `gh` for GitHub-hosted operations. Insp
 
 ### Inspect Branch Topology
 
-- Run `scripts/git_branch_snapshot.ps1 -RepoPath <repo>`.
+- Run `python3 scripts/git_branch_snapshot.py --repo-path <repo>` on macOS/Linux or `.\scripts\git_branch_snapshot.ps1 -RepoPath <repo>` in Windows PowerShell.
 - For narrower questions, use `git branch -vv`, `git for-each-ref`, and `git log --graph --decorate --oneline --all -n <N>`.
 
 ### Review Code Or A PR
 
 - Establish review scope first: local diff, two refs, or a GitHub PR number.
-- Run `scripts/git_review_snapshot.ps1 -RepoPath <repo> -BaseRef <base> -HeadRef <head>`.
+- Run `python3 scripts/git_review_snapshot.py --repo-path <repo> --base-ref <base> --head-ref <head>` on macOS/Linux or `.\scripts\git_review_snapshot.ps1 -RepoPath <repo> -BaseRef <base> -HeadRef <head>` in Windows PowerShell.
 - For GitHub PRs, augment with `gh pr view`, `gh pr diff`, `gh pr checks`, and `gh pr review` only as needed.
 - Default to a code-review mindset: findings first, summaries second.
 
@@ -103,7 +105,7 @@ Use `git` for local repository state and `gh` for GitHub-hosted operations. Insp
 
 ### Prepare A Repo For Public Release
 
-- Run `scripts/git_privacy_scan.ps1 -RepoPath <repo>` before any public push or visibility change.
+- Run `python3 scripts/git_privacy_scan.py --repo-path <repo>` on macOS/Linux or `.\scripts\git_privacy_scan.ps1 -RepoPath <repo>` in Windows PowerShell before any public push or visibility change.
 - Remove local absolute paths, tokens, private keys, credentialed remotes, and unintended personal identifiers from current files.
 - Inspect git history identities. If old commits still expose personal email or private collaboration history, do not make that repo public unchanged.
 - Prefer exporting the working tree to a new repository with fresh history when the user wants an open-source artifact without private history baggage.
@@ -136,9 +138,12 @@ Use `git` for local repository state and `gh` for GitHub-hosted operations. Insp
 
 ## Bundled Resources
 
-- [scripts/git_branch_snapshot.ps1](scripts/git_branch_snapshot.ps1): Print remotes, tracking info, branches, and a recent graph for branch-tree inspection.
-- [scripts/git_review_snapshot.ps1](scripts/git_review_snapshot.ps1): Print merge base, commit list, changed files, and diffstat for review preparation.
-- [scripts/git_privacy_scan.ps1](scripts/git_privacy_scan.ps1): Scan the working tree, remotes, and git history for common publication risks without printing secret values.
+- [scripts/git_branch_snapshot.py](scripts/git_branch_snapshot.py): Cross-platform branch graph and tracking snapshot for macOS/Linux.
+- [scripts/git_review_snapshot.py](scripts/git_review_snapshot.py): Cross-platform merge-base, commits, changed files, and diffstat snapshot for macOS/Linux.
+- [scripts/git_privacy_scan.py](scripts/git_privacy_scan.py): Cross-platform working-tree, remote, and history scan for publication risks on macOS/Linux.
+- [scripts/git_branch_snapshot.ps1](scripts/git_branch_snapshot.ps1): Windows PowerShell branch graph and tracking snapshot.
+- [scripts/git_review_snapshot.ps1](scripts/git_review_snapshot.ps1): Windows PowerShell merge-base, commits, changed files, and diffstat snapshot.
+- [scripts/git_privacy_scan.ps1](scripts/git_privacy_scan.ps1): Windows PowerShell working-tree, remote, and history scan for publication risks.
 - [references/capabilities.md](references/capabilities.md): Feature inventory organized by module, including future extension slots.
 - [references/command-recipes.md](references/command-recipes.md): Concrete `git` and `gh` recipes for repo creation, branch sync, PRs, reviews, issues, Actions, and releases.
 - [references/public-release.md](references/public-release.md): Public-release decision guide covering privacy review, fresh-history export, visibility changes, and licenses.

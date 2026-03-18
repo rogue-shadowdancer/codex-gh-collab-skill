@@ -19,9 +19,18 @@
 - `references/capabilities.md`: module inventory and future extension points
 - `references/command-recipes.md`: concrete `git` and `gh` command patterns
 - `references/public-release.md`: public-release checklist and privacy guidance
+- `scripts/git_branch_snapshot.py`: cross-platform branch graph and tracking snapshot
+- `scripts/git_review_snapshot.py`: cross-platform merge-base, commits, changed files, and diffstat snapshot
+- `scripts/git_privacy_scan.py`: cross-platform working-tree, remote, and history scan for publication risks
 - `scripts/git_branch_snapshot.ps1`: branch graph and tracking snapshot
 - `scripts/git_review_snapshot.ps1`: merge-base, commits, changed files, and diffstat snapshot
 - `scripts/git_privacy_scan.ps1`: working-tree, remote, and history scan for publication risks
+
+## Platform Support
+
+The repository now ships both Windows PowerShell helpers and cross-platform Python equivalents. Use the `.ps1` scripts in Windows PowerShell and the `.py` scripts with `python3` on macOS/Linux.
+
+The Python validation flow assumes `PyYAML` is installed. For local validation, prefer a repo-local virtual environment so tool dependencies and caches do not leak into the tracked tree.
 
 ## Install
 
@@ -38,6 +47,19 @@ Do not copy this repository root `README.md` or `LICENSE` into the installed ski
 ## Validate
 
 From the repository root:
+
+macOS/Linux:
+
+```bash
+python3 -m venv .venv
+.venv/bin/python -m pip install PyYAML
+PYTHONDONTWRITEBYTECODE=1 .venv/bin/python "$CODEX_HOME/skills/.system/skill-creator/scripts/quick_validate.py" .
+PYTHONDONTWRITEBYTECODE=1 .venv/bin/python scripts/git_branch_snapshot.py --repo-path .
+PYTHONDONTWRITEBYTECODE=1 .venv/bin/python scripts/git_review_snapshot.py --repo-path . --base-ref origin/main --head-ref HEAD
+PYTHONDONTWRITEBYTECODE=1 .venv/bin/python scripts/git_privacy_scan.py --repo-path .
+```
+
+Windows PowerShell:
 
 ```powershell
 python "$env:CODEX_HOME\skills\.system\skill-creator\scripts\quick_validate.py" .
@@ -61,6 +83,7 @@ python "$env:CODEX_HOME\skills\.system\skill-creator\scripts\quick_validate.py" 
 - Inspect before mutating: remotes, current branch, base branch, and auth state.
 - Ask before force pushes, branch deletion, merges, releases, or repo admin changes.
 - Do not make a repo public until current files and git history are reviewed for privacy.
+- Common local-only directories such as `.venv/` and `__pycache__/` are intentionally excluded from tracking and privacy scan results.
 
 ## License
 

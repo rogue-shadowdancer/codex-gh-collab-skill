@@ -16,11 +16,12 @@ Only change an existing repository from private to public when both the current 
 
 ## Privacy Review Checklist
 
-1. Scan the working tree with `scripts/git_privacy_scan.ps1 -RepoPath <repo>`.
+1. Scan the working tree with `python3 scripts/git_privacy_scan.py --repo-path <repo>` on macOS/Linux or `.\scripts\git_privacy_scan.ps1 -RepoPath <repo>` in Windows PowerShell.
 2. Review flagged file locations before printing or sharing their contents.
 3. Review git history identities and decide whether any non-public email must be removed.
 4. Inspect remote URLs and ensure no credentials are embedded.
 5. Confirm the repository-level docs do not contain local absolute paths or internal-only instructions.
+6. Keep local tool state out of the release tree. Common developer-only directories such as `.venv/`, `venv/`, `env/`, and `__pycache__/` should remain untracked and are ignored by the bundled privacy scan to reduce false positives.
 
 ## Clean Export Workflow
 
