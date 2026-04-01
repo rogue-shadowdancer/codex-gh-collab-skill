@@ -2,6 +2,18 @@
 
 `gh-collab` is a Codex skill for GitHub repository work: creating or connecting remotes, publishing branches, inspecting branch topology, preparing pull requests, reviewing code, and handling adjacent GitHub collaboration tasks.
 
+## Why This Repo Exists
+
+This repository packages a reusable Codex skill for day-to-day GitHub work. The goal is to give Codex a practical, safety-conscious workflow for:
+
+- local `git` inspection and branch analysis
+- GitHub-hosted actions through `gh`
+- pull request preparation and review
+- privacy-aware open-source publication
+- repository licensing and release hygiene
+
+The public repo contains both the skill instructions and the helper scripts that make repeated workflows more reliable.
+
 ## What The Skill Covers
 
 - Repository bootstrap and remote sync with `git` and `gh`
@@ -11,6 +23,20 @@
 - Privacy-safe open-source publication with clean-history export guidance
 - License addition and public-release verification
 - Review comments, issues, Actions, releases, and related GitHub tasks
+
+## Quick Start
+
+If you are evaluating the repository itself:
+
+1. Read [`SKILL.md`](./SKILL.md) for the actual behavior Codex will follow.
+2. Read [`references/command-recipes.md`](./references/command-recipes.md) for concrete `git` and `gh` commands.
+3. Run the helper scripts that match your platform to verify the repo locally.
+
+If you want to install the skill into Codex:
+
+1. Copy the skill files into your Codex skills directory as `gh-collab`.
+2. Keep only the skill payload: `SKILL.md`, `agents/`, `references/`, and `scripts/`.
+3. Restart Codex so the installed skill is picked up cleanly.
 
 ## Repository Layout
 
@@ -32,6 +58,21 @@ The repository now ships both Windows PowerShell helpers and cross-platform Pyth
 
 The Python validation flow assumes `PyYAML` is installed. For local validation, prefer a repo-local virtual environment so tool dependencies and caches do not leak into the tracked tree.
 
+## Which Helper To Use
+
+Use the helper that matches the host shell and platform:
+
+- Windows PowerShell: use the `*.ps1` scripts
+- macOS/Linux: use the `*.py` scripts with `python3`
+
+Current helper pairs:
+
+- `git_branch_snapshot`: branch graph, remotes, tracking, and recent commit tree
+- `git_review_snapshot`: merge base, commits in scope, changed files, and diffstat
+- `git_privacy_scan`: working-tree, remote, and commit-identity scan before publication
+
+The Python and PowerShell variants are intended to produce aligned output so the skill behavior stays consistent across platforms.
+
 ## Install
 
 Install the skill contents into your Codex skills directory as `gh-collab`. The installed skill folder should contain the skill files only:
@@ -42,6 +83,29 @@ Install the skill contents into your Codex skills directory as `gh-collab`. The 
 - `scripts/`
 
 Do not copy this repository root `README.md` or `LICENSE` into the installed skill folder.
+
+## Common Workflows
+
+The skill is designed around a few high-value paths:
+
+### Publish Local Work To GitHub
+
+- inspect remotes, branch state, and auth
+- create or connect a remote repository
+- push the current branch with explicit upstream tracking
+
+### Review Or Prepare A Pull Request
+
+- snapshot the branch graph
+- collect the review diff from base to head
+- summarize findings before posting comments or approvals
+
+### Prepare A Repository For Public Release
+
+- scan for local paths, tokens, private keys, and suspicious remotes
+- inspect commit identities before exposing history
+- prefer a fresh public repo when private history should not be exposed
+- add or confirm a standard `LICENSE` file before calling the repo open source
 
 ## Validate
 
@@ -84,6 +148,17 @@ python "$env:CODEX_HOME\skills\.system\skill-creator\scripts\quick_validate.py" 
 - Do not make a repo public until current files and git history are reviewed for privacy.
 - If `gh` is installed per-user and another agent cannot find it on `PATH`, try `$env:LOCALAPPDATA\Programs\GitHubCLI\bin\gh.exe` or restart the session that launched the agent.
 - Common local-only directories such as `.venv/` and `__pycache__/` are intentionally excluded from tracking and privacy scan results.
+
+## Safety Model
+
+This skill intentionally does not treat GitHub publication as a routine write operation. It is opinionated in a few places:
+
+- it checks local state before pushing or merging
+- it treats privacy review as required before public release
+- it prefers a fresh public export over exposing private history by accident
+- it keeps destructive actions such as force-pushes and visibility changes explicit
+
+That bias is deliberate. The goal is to make the common workflows efficient without normalizing risky repository operations.
 
 ## License
 
