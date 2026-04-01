@@ -116,7 +116,7 @@ Use the bundled Python helpers on macOS/Linux and the PowerShell helpers on Wind
 ### Publish A Clean Public Repo
 
 - Copy the working tree into a new directory without `.git`.
-- Initialize a fresh repo with `git init -b main`.
+- Initialize a fresh repo with `git init -b master`.
 - Set a public-safe identity such as a GitHub `users.noreply.github.com` email if the user does not want a personal email in public history.
 - Commit the clean snapshot, then create the public repo with `gh repo create <owner>/<name> --public --source . --remote origin --push`.
 - Verify final visibility and default branch with `gh repo view`.
@@ -131,7 +131,7 @@ Use the bundled Python helpers on macOS/Linux and the PowerShell helpers on Wind
 
 - Ask before `git push --force-with-lease`, branch deletion, merges, rebases on shared branches, release publication, Actions reruns that trigger deploys, or repo admin changes.
 - Never use `git push --force` unless the user explicitly insists and the branch risk is clear.
-- Do not assume the default branch is `main`; inspect first.
+- Do not assume the default branch is `master`; inspect first.
 - Treat GitHub auth tokens, remote URLs, and private repo names as sensitive.
 - Prefer read-only inspection when repo policy, CI status, or repo ownership is unclear.
 - Treat making a repo public as irreversible exposure until proven otherwise.

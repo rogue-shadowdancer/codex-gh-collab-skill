@@ -118,7 +118,7 @@ python3 -m venv .venv
 .venv/bin/python -m pip install PyYAML
 PYTHONDONTWRITEBYTECODE=1 .venv/bin/python "$CODEX_HOME/skills/.system/skill-creator/scripts/quick_validate.py" .
 PYTHONDONTWRITEBYTECODE=1 .venv/bin/python scripts/git_branch_snapshot.py --repo-path .
-PYTHONDONTWRITEBYTECODE=1 .venv/bin/python scripts/git_review_snapshot.py --repo-path . --base-ref origin/main --head-ref HEAD
+PYTHONDONTWRITEBYTECODE=1 .venv/bin/python scripts/git_review_snapshot.py --repo-path . --base-ref origin/master --head-ref HEAD
 PYTHONDONTWRITEBYTECODE=1 .venv/bin/python scripts/git_privacy_scan.py --repo-path .
 ```
 
@@ -127,7 +127,7 @@ Windows PowerShell:
 ```powershell
 python "$env:CODEX_HOME\skills\.system\skill-creator\scripts\quick_validate.py" .
 .\scripts\git_branch_snapshot.ps1 -RepoPath .
-.\scripts\git_review_snapshot.ps1 -RepoPath . -BaseRef origin/main -HeadRef HEAD
+.\scripts\git_review_snapshot.ps1 -RepoPath . -BaseRef origin/master -HeadRef HEAD
 .\scripts\git_privacy_scan.ps1 -RepoPath .
 ```
 
@@ -135,7 +135,7 @@ python "$env:CODEX_HOME\skills\.system\skill-creator\scripts\quick_validate.py" 
 
 - "Create a GitHub repo for this local project and push the current branch."
 - "Show me the branch tree and explain which branch is ahead."
-- "Open a PR from this branch to main and draft the title and body."
+- "Open a PR from this branch to master and draft the title and body."
 - "Review this PR and call out bugs, regressions, and missing tests."
 - "Reply to the review comments and push the fixes."
 - "Clean this repo for open source, create a new public repo, and add LGPL."

@@ -58,7 +58,7 @@ If `origin` already exists, inspect it before replacing it.
 
 ```powershell
 git fetch origin
-git rebase origin/main
+git rebase origin/master
 git push origin HEAD
 ```
 
@@ -85,16 +85,16 @@ git log --graph --oneline --decorate --all -n 30
 ## Prepare A Local Review Snapshot
 
 ```bash
-python3 scripts/git_review_snapshot.py --repo-path . --base-ref origin/main --head-ref HEAD
-# Windows PowerShell: .\scripts\git_review_snapshot.ps1 -RepoPath . -BaseRef origin/main -HeadRef HEAD
+python3 scripts/git_review_snapshot.py --repo-path . --base-ref origin/master --head-ref HEAD
+# Windows PowerShell: .\scripts\git_review_snapshot.ps1 -RepoPath . -BaseRef origin/master -HeadRef HEAD
 ```
 
 Useful follow-up commands:
 
 ```powershell
-git diff --stat --find-renames origin/main...HEAD
-git diff --name-status --find-renames origin/main...HEAD
-git log --oneline --decorate origin/main..HEAD
+git diff --stat --find-renames origin/master...HEAD
+git diff --name-status --find-renames origin/master...HEAD
+git log --oneline --decorate origin/master..HEAD
 ```
 
 ## Pull Request Inspection
@@ -111,7 +111,7 @@ Use local `git diff` when remote access is unavailable or unnecessary.
 ## Create Or Update A Pull Request
 
 ```powershell
-gh pr create --base main --head feature/my-branch --title "Title" --body-file ./pr-body.md
+gh pr create --base master --head feature/my-branch --title "Title" --body-file ./pr-body.md
 gh pr edit 123 --title "Updated title"
 ```
 
@@ -132,7 +132,7 @@ Prefer drafting the review content locally before posting it.
 ```bash
 python3 scripts/git_privacy_scan.py --repo-path .
 # Windows PowerShell: .\scripts\git_privacy_scan.ps1 -RepoPath .
-git log --format='%h %ae' main
+git log --format='%h %ae' master
 ```
 
 Interpretation:
@@ -146,7 +146,7 @@ Interpretation:
 From a new export directory that does not contain the original `.git` history:
 
 ```powershell
-git init -b main
+git init -b master
 git config user.name "PUBLIC_NAME"
 git config user.email "12345678+user@users.noreply.github.com"
 git add .
@@ -180,7 +180,7 @@ Fetch canonical license text and write it to `LICENSE`:
 gh repo license view lgpl-3.0 > LICENSE
 git add LICENSE
 git commit -m "Add LGPL-3.0 license"
-git push origin main
+git push origin master
 ```
 
 If the repository has a root `README.md`, add a short license note there as well.

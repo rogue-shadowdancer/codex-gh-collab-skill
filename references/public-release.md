@@ -27,7 +27,7 @@ Only change an existing repository from private to public when both the current 
 
 1. Copy the working tree into a fresh directory without `.git`.
 2. Re-run the privacy scan in the fresh export directory.
-3. Initialize a new repo with `git init -b main`.
+3. Initialize a new repo with `git init -b master`.
 4. Set a public-safe git identity, preferably a GitHub `users.noreply.github.com` address if the user does not want a personal email exposed.
 5. Commit the clean snapshot once.
 6. Create the public repo with `gh repo create OWNER/REPO --public --source . --remote origin --push`.
